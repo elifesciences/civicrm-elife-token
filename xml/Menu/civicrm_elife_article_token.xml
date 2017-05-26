@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/elife-article-token/scratch</path>
+    <page_callback>CRM_ElifeArticleToken_Page_Scratch</page_callback>
+    <title>Scratch</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/elife-article-token/settings</path>
+    <page_callback>CRM_ElifeArticleToken_Form_Settings</page_callback>
+    <title>eLife Sciences article tokens</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+</menu>
