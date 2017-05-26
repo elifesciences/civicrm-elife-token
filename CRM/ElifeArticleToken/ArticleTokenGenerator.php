@@ -36,7 +36,6 @@ class CRM_ElifeArticleToken_ArticleTokenGenerator{
     foreach($subjects as $subject){
       $url .= '&subject[]=' . $subject;
     }
-    echo $url;
     $data = [
       'pug' => $this->getPug('last-7-days'),
       'json' => $this->getJson($url),
