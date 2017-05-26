@@ -6,7 +6,7 @@ class CRM_ElifeArticleToken_ArticleTokenGenerator{
 
   static $subjectsCustomFieldRef = 'interests.subjects';
 
-  static $civinkyUrl = 'http://civinky.3sd.io/generate';
+  static $civinkyUrl = 'https://civinky.3sd.io/generate';
 
   function getDefinitions(){
     $definitions = ['articles.last_7_days' => 'Articles published in the last 7 days'];
