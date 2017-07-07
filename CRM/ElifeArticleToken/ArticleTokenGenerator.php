@@ -40,7 +40,7 @@ class CRM_ElifeArticleToken_ArticleTokenGenerator{
       'pug' => $this->getPug('last-7-days'),
       'json' => $this->getJson($url),
       'css' => $this->getCss('newsletter'),
-      'snippet' => 'true'
+      'snippet' => true
     ];
     return $this->queryCivinky($data);
   }
@@ -75,14 +75,16 @@ class CRM_ElifeArticleToken_ArticleTokenGenerator{
   }
 
   function queryCivinky($data){
-    $curl = curl_init(self::$civinkyUrl);
-    curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($curl);
-    curl_close($curl);
-    return $response;
+
+    $options = ['http' => [
+      'method'  => 'POST',
+      'header'  => 'Content-type: application/json',
+      'content' => json_encode($data)
+    ]];
+
+    $context = stream_context_create($options);
+    $result = file_get_contents(self::$civinkyUrl, false, $context);
+
+    return $result;
   }
-
-
 }
