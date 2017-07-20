@@ -1,7 +1,12 @@
-each item in items
-  h2 !{item.title}
-  p.published Published: #{item.published}
-  p !{item.impactStatement}
-  p.authorLine #{item.authorLine}
-  p https://elifesciences.org/articles/#{item.id}
-  hr
+container
+  row
+    columns
+      h1 News from eLife
+      each item in items
+        h2 !{item.title}
+        p.published Published: #{item.published}
+        p !{item.impactStatement}
+        p.authorLine #{item.authorLine}
+        p
+          a(href=`https://elifesciences.org/articles/${item.id}`) Read more
+        hr
