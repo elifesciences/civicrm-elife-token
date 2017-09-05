@@ -25,8 +25,11 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
     // Get the JSON
     $template = file_get_contents(civicrm_elife_token_get_root_dir()."/pug/last-7-days.pug");
-    $subjects = $this->getSubjects($contactId);
-    $articles = $this->getArticles($subjects);
+
+    // TODO For now, return all subjects and do not filter
+    // $subjects = $this->getSubjects($contactId);
+    // $articles = $this->getArticles($subjects);
+    $articles = $this->getArticles();
     $css = file_get_contents(civicrm_elife_token_get_root_dir()."/css/newsletter.css");
 
     $civinky = new CRM_ElifeToken_Civinky;
@@ -53,7 +56,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     return $subjects;
   }
 
-  function getArticles($subjects){
+  function getArticles($subjects = null){
 
     // Construct the URL
     $url = 'https://prod--gateway.elifesciences.org/search';
@@ -66,10 +69,11 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     $endDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-1 day'), 'Y-m-d 23:23:59'));
     $url .= '&end-date='.$endDate->format('Y-m-d');
 
-    // Add each subject to the URL
-    foreach($subjects as $subject){
-      $url .= '&subject[]=' . $subject;
-    }
+    // TODO For now, return all subjects and do not filter
+    // // Add each subject to the URL
+    // foreach($subjects as $subject){
+    //   $url .= '&subject[]=' . $subject;
+    // }
 
     // Check if we have retrieved this already
     if(!isset(self::$elifeApiCache[$url])){
