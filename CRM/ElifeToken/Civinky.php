@@ -5,7 +5,7 @@
  */
 class CRM_ElifeToken_Civinky{
 
-  function __construct($civinkyUrl = 'https://civinky.3sd.io/generate'){
+  function __construct($civinkyUrl = 'http://localhost:30649/generate'){
     $this->civinkyUrl = $civinkyUrl;
   }
 
