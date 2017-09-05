@@ -1,3 +1,3 @@
 # CiviCRM Elife token
 
-An implementation of various tokens for Elife's CiviCRM instance.
+A CiviCRM extension that implements various tokens for Elife's CiviCRM instance.
