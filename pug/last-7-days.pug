@@ -1,12 +1,7 @@
-container
-  row
-    columns
-      h1 News from eLife
-      each item in items
-        h2 !{item.title}
-        p.published Published: #{item.published}
-        p !{item.impactStatement}
-        p.authorLine #{item.authorLine}
-        p
-          a(href=`https://elifesciences.org/articles/${item.id}`) Read more
-        hr
+columns.content-listing
+  h2 LATEST
+  each item in items
+    div.item
+      h3 #[a(href=`https://elifesciences.org/articles/${item.id}`) !{item.title}]
+      p.author #{item.authorLine}
+      p.description !{item.impactStatement}
