@@ -13,11 +13,10 @@ class CRM_ElifeToken_Civinky{
 
     $data = [
       'pug' => $pug,
-      'json' => $json,
+      'json' => json_decode($json),
       'css' => $css,
       'snippet' => $snippet
     ];
-
     $options = ['http' => [
       'method'  => 'POST',
       'header'  => 'Content-type: application/json',
