@@ -22,7 +22,6 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
    * @return string HTML of the token
    */
   function get($contactId, $jobId){
-
     // Get the JSON
     $template = file_get_contents(civicrm_elife_token_get_root_dir()."/pug/last-7-days.pug");
 
@@ -30,7 +29,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     // $subjects = $this->getSubjects($contactId);
     // $articles = $this->getArticles($subjects);
     $articles = $this->getArticles();
-    $css = file_get_contents(civicrm_elife_token_get_root_dir()."/css/newsletter.css");
+    $css = file_get_contents(CIVICRM_UF_BASEURL."sites/all/libraries/elife-newsletter-assets/newsletter.css");
 
     $civinky = new CRM_ElifeToken_Civinky;
     $html = $civinky->query($template, $articles, $css, true);
