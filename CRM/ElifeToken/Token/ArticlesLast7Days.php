@@ -8,6 +8,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
    * @var array
    */
   static $elifeApiCache = [];
+  static $gaTokenCache;
 
   /**
    * Custom field containing interests
@@ -29,10 +30,11 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     // $subjects = $this->getSubjects($contactId);
     // $articles = $this->getArticles($subjects);
     $articles = $this->getArticles();
+    $gaToken = $this->getGAToken();
     $css = file_get_contents(CIVICRM_UF_BASEURL."sites/all/libraries/elife-newsletter-assets/newsletter.css");
 
     $civinky = new CRM_ElifeToken_Civinky;
-    $html = $civinky->query($template, $articles, $css, true);
+    $html = $civinky->query($template, ['articles' => $articles, 'gaToken' => $gaToken], $css, true);
 
     if($jobId){
       $html = $this->trackUrls($html, $contactId, $jobId);
@@ -76,10 +78,20 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
     // Check if we have retrieved this already
     if(!isset(self::$elifeApiCache[$url])){
-      self::$elifeApiCache[$url] = file_get_contents($url);
+      self::$elifeApiCache[$url] = json_decode(file_get_contents($url));
     }
 
     return self::$elifeApiCache[$url];
+  }
+
+  function getGAToken(){
+
+    if(!isset(self::$gaTokenCache)){
+      $gat = new CRM_ElifeToken_Token_GATracking();
+      self::$gaTokenCache = $gat->get();
+    }
+
+    return self::$gaTokenCache;
   }
 
   function trackUrls($html, $contactId, $jobId){

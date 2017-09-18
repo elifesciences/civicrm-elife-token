@@ -13,7 +13,7 @@ class CRM_ElifeToken_Civinky{
 
     $data = [
       'pug' => $pug,
-      'json' => json_decode($json),
+      'json' => $json,
       'css' => $css,
       'snippet' => $snippet
     ];
