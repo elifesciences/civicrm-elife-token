@@ -22,19 +22,24 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
    * @param  int $cid Contact ID
    * @return string HTML of the token
    */
-  function get($contactId, $jobId){
+  function get($contactId, $jobId, $type){
     // Get the JSON
-    $template = file_get_contents(civicrm_elife_token_get_root_dir()."/pug/last-7-days.pug");
+    $template = file_get_contents(civicrm_elife_token_get_root_dir()."/pug/articles.pug");
 
     // TODO For now, return all subjects and do not filter
     // $subjects = $this->getSubjects($contactId);
-    // $articles = $this->getArticles($subjects);
-    $articles = $this->getArticles();
+    // $articles = $this->getArticles($type, $subjects);
+    $title = ($type == 'magazine') ? 'MAGAZINE' : 'LATEST';
+    $articles = $this->getArticles($type);
     $gaToken = $this->getGAToken();
     $css = file_get_contents(CIVICRM_UF_BASEURL."sites/all/libraries/elife-newsletter-assets/newsletter.css");
 
     $civinky = new CRM_ElifeToken_Civinky;
-    $html = $civinky->query($template, ['articles' => $articles, 'gaToken' => $gaToken], $css, true);
+    $html = $civinky->query($template, [
+      'title' => $title,
+      'articles' => $articles,
+      'gaToken' => $gaToken
+    ], $css, true);
 
     if($jobId){
       $html = $this->trackUrls($html, $contactId, $jobId);
@@ -57,10 +62,12 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     return $subjects;
   }
 
-  function getArticles($subjects = null){
+  function getArticles($type, $subjects = null){
 
     // Construct the URL
     $url = 'https://prod--gateway.elifesciences.org/search';
+
+    //TODO add filtering for type
 
     // Start date is midnight this morning - 7 days
     $startDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-7 day'), 'Y-m-d 00:00:00'));

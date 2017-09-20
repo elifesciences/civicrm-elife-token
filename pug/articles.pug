@@ -1,5 +1,5 @@
 columns.content-listing
-  h2 LATEST
+  h2 #{title}
   each item in articles.items
     div.item
       h3 #[a(href=`https://elifesciences.org/articles/${item.id}?${gaToken}`) !{item.title}]
