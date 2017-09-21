@@ -85,7 +85,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
     // Check if we have retrieved this already
     if(!isset(self::$elifeApiCache[$url])){
-      self::$elifeApiCache[$url] = json_decode(file_get_contents($url));
+      self::$elifeApiCache[$url] = json_decode(file_get_contents($url), true);
     }
 
     return self::$elifeApiCache[$url];
