@@ -6,7 +6,9 @@ class CRM_ElifeToken_TokenService{
 
   function getDefinitions(){
     $definitions = ['articles.poa_last_7_days' => 'POA articles published in the last 7 days'];
+    $definitions = ['articles.poa_marketing' => 'POA marketing message'];
     $definitions = ['articles.vor_last_7_days' => 'VOR articles published in the last 7 days'];
+    $definitions = ['articles.vor_marketing' => 'VOR marketing message'];
     $definitions = ['articles.magazine_last_7_days' => 'Magazine articles published in the last 7 days'];
     $definitions = ['articles.ga_tracking' => 'Google analytics tracking params for elife newsletters'];
     return $definitions;
@@ -32,6 +34,16 @@ class CRM_ElifeToken_TokenService{
       case 'ga_tracking':{
         $token = new CRM_ElifeToken_Token_GATracking;
         $value = $token->get();
+        break;
+      }
+      case 'poa_marketing':{
+        $token = new CRM_ElifeToken_Token_MarketingMessage;
+        $value = $token->get('vor');
+        break;
+      }
+      case 'vor_marketing':{
+        $token = new CRM_ElifeToken_Token_MarketingMessage;
+        $value = $token->get('poa');
         break;
       }
     }
