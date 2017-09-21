@@ -9,7 +9,7 @@ class CRM_ElifeToken_Civinky{
     $this->civinkyUrl = $civinkyUrl;
   }
 
-  function query($pug = '', $json = '{}', $css = '', $snippet = false){
+  function query($pug = '', $json = [], $css = '', $snippet = false){
 
     $data = [
       'pug' => $pug,
