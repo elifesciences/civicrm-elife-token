@@ -14,9 +14,9 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
   public function smokeTestThePoaContent() {
     $content = $this->token->getArticles('poa');
     $this->checkDataStructure($content);
-    foreach ($items as $item) {
+    foreach ($content['items'] as $item) {
       $this->assertArrayHasKey('status', $item);
-      $this->assertSame($type, $item['status']);
+      $this->assertSame('poa', $item['status']);
     }
   }
 
@@ -26,9 +26,9 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
   public function smokeTestTheVorContent() {
     $content = $this->token->getArticles('vor');
     $this->checkDataStructure($content);
-    foreach ($items as $item) {
+    foreach ($content['items'] as $item) {
       $this->assertSame('vor', $item['status']);
-      $this->assertNotContains($item['type'], $this->magazineTypes);
+      $this->assertNotContains($item['type'], $this->magazineTypes, "No magazine types should be duplicated in VOR");
     }
   }
 
@@ -36,9 +36,9 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
    * @test
    */
   public function smokeTestTheMagazineContent() {
-    $content = $this->token->getArticles('vor');
+    $content = $this->token->getArticles('magazine');
     $this->checkDataStructure($content);
-    foreach ($items as $item) {
+    foreach ($content['items'] as $item) {
       $this->assertArrayHasKey('status', $item);
       $this->assertSame('vor', $item['status']);
       $this->assertContains($item['type'], $this->magazineTypes);
@@ -57,5 +57,5 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
       $this->assertInternalType('array', $item);
       $this->assertArrayHasKey('status', $item);
     }
-  } 
+  }
 }
