@@ -31,6 +31,11 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     // $articles = $this->getArticles($type, $subjects);
     $title = ($type == 'magazine') ? 'MAGAZINE' : 'LATEST';
     $articles = $this->getArticles($type);
+
+    if(!count($articles['items'])){
+      return '';
+    }
+
     $gaToken = $this->getGAToken();
     $css = file_get_contents(CIVICRM_UF_BASEURL."sites/all/libraries/elife-newsletter-assets/newsletter.css");
 
@@ -79,8 +84,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     $query[] = 'per-page=1000';
 
 
-    // TODO For now, return all subjects and do not filter
-    // // Add each subject to the URL
+    // TODO Filter based on contact subject preferences - paused for now
     // foreach($subjects as $subject){
     //   $query[] = '&subject[]=' . $subject;
     // }
@@ -102,8 +106,8 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
   function getGAToken(){
 
     if(!isset(self::$gaTokenCache)){
-      $gat = new CRM_ElifeToken_Token_GATracking();
-      self::$gaTokenCache = $gat->get();
+      $token = CRM_ElifeToken_Token_GATracking::Instance();
+      $value = $token->get();
     }
 
     return self::$gaTokenCache;
@@ -127,7 +131,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     return $html;
   }
 
-  function filterPOA($content){
+  function filterPoa($content){
     $content['items'] = array_filter($content['items'], function($item){
       if(isset($item['status'])){
         return $item['status'] == 'poa';
@@ -136,7 +140,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     return $content;
   }
 
-  function filterVOR($content){
+  function filterVor($content){
     $content['items'] = array_filter($content['items'], function($item){
       if(isset($item['status'])){
         return $item['status'] == 'vor';
@@ -147,7 +151,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
   function filterMagazine($content){
     $content['items'] = array_filter($content['items'], function($item){
-      return in_array($item['type'], ['editorial', 'feature', 'insights']);
+      return in_array($item['type'], ['editorial', 'feature', 'insight']);
     });
     return $content;
   }

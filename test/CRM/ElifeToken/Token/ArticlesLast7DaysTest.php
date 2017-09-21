@@ -5,9 +5,9 @@ require_once __DIR__.'/../../../../CRM/ElifeToken/Token/ArticlesLast7Days.php';
 class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestCase {
   public static function possibleTypes() {
     return [
-        ['POA'],
-        ['VOR'],
-        ['Magazine']
+        ['poa'],
+        ['vor'],
+        ['magazine']
     ];
   }
   /**
