@@ -9,6 +9,7 @@ class CRM_ElifeToken_TokenService{
     $definitions = ['articles.vor_last_7_days' => 'VOR articles published in the last 7 days'];
     $definitions = ['articles.magazine_last_7_days' => 'Magazine articles published in the last 7 days'];
     $definitions = ['articles.ga_tracking' => 'Google analytics tracking params for elife newsletters'];
+    $definitions = ['articles.marketing_message' => 'Marketing message for elife newsletters'];
     return $definitions;
   }
 
@@ -30,7 +31,12 @@ class CRM_ElifeToken_TokenService{
         break;
       }
       case 'ga_tracking':{
-        $token = new CRM_ElifeToken_Token_GATracking;
+        $token = CRM_ElifeToken_Token_GATracking::Instance();
+        $value = $token->get();
+        break;
+      }
+      case 'marketing_message':{
+        $token = CRM_ElifeToken_Token_MarketingMessage::Instance();
         $value = $token->get();
         break;
       }

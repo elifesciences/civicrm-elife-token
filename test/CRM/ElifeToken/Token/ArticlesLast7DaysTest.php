@@ -5,7 +5,9 @@ require_once __DIR__.'/../../../../CRM/ElifeToken/Token/ArticlesLast7Days.php';
 class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestCase {
   public static function possibleTypes() {
     return [
-        ['magazine'],
+        ['POA'],
+        ['VOR'],
+        ['Magazine']
     ];
   }
   /**
@@ -14,7 +16,7 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
    */
   public function smokeTestTheContentFilteredFor($type) {
     $token = new CRM_ElifeToken_Token_ArticlesLast7Days();
-    $content = $token->getArticles('magazine');
+    $content = $token->getArticles($type);
     $this->assertInternalType('array', $content);
     $this->assertArrayHasKey('total', $content);
     $this->assertInternalType('integer', $content['total']);
@@ -25,5 +27,5 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
     foreach ($items as $item) {
         $this->assertInternalType('array', $item);
     }
-  } 
+  }
 }

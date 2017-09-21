@@ -63,32 +63,40 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
   }
 
   function getArticles($type, $subjects = null){
+    // var_dump($type);
 
     // Construct the URL
-    $url = 'https://prod--gateway.elifesciences.org/search';
-
-    //TODO add filtering for type
+    $path = 'https://prod--gateway.elifesciences.org/search';
 
     // Start date is midnight this morning - 7 days
     $startDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-7 day'), 'Y-m-d 00:00:00'));
-    $url .= '?start-date='.$startDate->format('Y-m-d');
+    $query[] = 'start-date='.$startDate->format('Y-m-d');
 
     // End date last second of yesterday
     $endDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-1 day'), 'Y-m-d 23:23:59'));
-    $url .= '&end-date='.$endDate->format('Y-m-d');
+    $query[] = 'end-date='.$endDate->format('Y-m-d');
+
+    $query[] = 'per-page=1000';
+
 
     // TODO For now, return all subjects and do not filter
     // // Add each subject to the URL
     // foreach($subjects as $subject){
-    //   $url .= '&subject[]=' . $subject;
+    //   $query[] = '&subject[]=' . $subject;
     // }
+
+    $url = $path.'?'.implode('&', $query);
 
     // Check if we have retrieved this already
     if(!isset(self::$elifeApiCache[$url])){
       self::$elifeApiCache[$url] = json_decode(file_get_contents($url), true);
     }
 
-    return self::$elifeApiCache[$url];
+    $result = self::$elifeApiCache[$url];
+
+    $filtered = call_user_func([$this, 'filter'.ucfirst($type)], $result);
+
+    return $filtered;
   }
 
   function getGAToken(){
@@ -117,5 +125,30 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     $html = str_replace(array_keys($replacements), $replacements, $html);
 
     return $html;
+  }
+
+  function filterPOA($content){
+    $content['items'] = array_filter($content['items'], function($item){
+      if(isset($item['status'])){
+        return $item['status'] == 'poa';
+      }
+    });
+    return $content;
+  }
+
+  function filterVOR($content){
+    $content['items'] = array_filter($content['items'], function($item){
+      if(isset($item['status'])){
+        return $item['status'] == 'vor';
+      }
+    });
+    return $content;
+  }
+
+  function filterMagazine($content){
+    $content['items'] = array_filter($content['items'], function($item){
+      return in_array($item['type'], ['editorial', 'feature', 'insights']);
+    });
+    return $content;
   }
 }
