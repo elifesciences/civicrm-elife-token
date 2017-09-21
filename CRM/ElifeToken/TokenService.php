@@ -37,13 +37,13 @@ class CRM_ElifeToken_TokenService{
         break;
       }
       case 'poa_marketing':{
-        $token = new CRM_ElifeToken_Token_MarketingMessage;
-        $value = $token->get('vor');
+        $token = CRM_ElifeToken_Token_MarketingMessage::Instance();
+        $value = $token->get('poa');
         break;
       }
       case 'vor_marketing':{
-        $token = new CRM_ElifeToken_Token_MarketingMessage;
-        $value = $token->get('poa');
+        $token = CRM_ElifeToken_Token_MarketingMessage::Instance();
+        $value = $token->get('vor');
         break;
       }
     }
