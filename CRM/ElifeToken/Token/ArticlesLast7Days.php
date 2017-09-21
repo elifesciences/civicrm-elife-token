@@ -67,8 +67,6 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     // Construct the URL
     $url = 'https://prod--gateway.elifesciences.org/search';
 
-    //TODO add filtering for type
-
     // Start date is midnight this morning - 7 days
     $startDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-7 day'), 'Y-m-d 00:00:00'));
     $url .= '?start-date='.$startDate->format('Y-m-d');
@@ -84,11 +82,31 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     // }
 
     // Check if we have retrieved this already
-    if(!isset(self::$elifeApiCache[$url])){
-      self::$elifeApiCache[$url] = json_decode(file_get_contents($url), true);
+    if(!isset(self::$elifeApiCache[$url][$type])){
+      $content = json_decode(file_get_contents($url), true);
+      self::$elifeApiCache[$url][$type] = $this->filter($content, $type);
     }
 
-    return self::$elifeApiCache[$url];
+    return self::$elifeApiCache[$url][$type];
+  }
+
+  function filter($content, $type) {
+    $items = [];
+    foreach ($content['items'] as $item) {
+      if (!array_key_exists('status', $item)) {
+        // skip as it's not an article content type
+        continue;
+      }
+      if ($item['status'] !== $type) {
+        // skip as it's not an article content type
+        continue;
+      }
+      $items[] = $item;
+    }
+    var_dump($items);
+    $content['items'] = $items;
+    $content['total'] = count($items);
+    return $content;
   }
 
   function getGAToken(){
