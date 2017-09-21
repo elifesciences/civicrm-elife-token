@@ -16,6 +16,8 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
    */
   static $subjectsCustomFieldRef = 'interests.subjects';
 
+  static $magazineVorTypes = ['editorial', 'feature', 'insight'];
+
   /**
    * Gets the html for each recipient
    * @method get
@@ -143,7 +145,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
   function filterVor($content){
     $content['items'] = array_filter($content['items'], function($item){
       if(isset($item['status'])){
-        return $item['status'] == 'vor';
+        return $item['status'] == 'vor' and !in_array($item['type'], self::$magazineVorTypes);
       }
     });
     return $content;
@@ -151,7 +153,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
   function filterMagazine($content){
     $content['items'] = array_filter($content['items'], function($item){
-      return in_array($item['type'], ['editorial', 'feature', 'insight']);
+      return in_array($item['type'], self::$magazineVorTypes);
     });
     return $content;
   }
