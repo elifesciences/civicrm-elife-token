@@ -109,7 +109,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
     if(!isset(self::$gaTokenCache)){
       $token = CRM_ElifeToken_Token_GATracking::Instance();
-      $value = $token->get();
+      self::$gaTokenCache = $token->get();
     }
 
     return self::$gaTokenCache;
