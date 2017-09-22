@@ -18,6 +18,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
   static $magazineVorTypes = ['editorial', 'feature', 'insight'];
 
+  static $excludeTypes = ['correction'];
   /**
    * Gets the html for each recipient
    * @method get
@@ -136,7 +137,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
   function filterPoa($content){
     $content['items'] = array_filter($content['items'], function($item){
       if(isset($item['status'])){
-        return $item['status'] == 'poa';
+        return $item['status'] == 'poa' and !in_array($item['type'], self::$excludeTypes);;
       }
     });
     return $content;
@@ -145,7 +146,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
   function filterVor($content){
     $content['items'] = array_filter($content['items'], function($item){
       if(isset($item['status'])){
-        return $item['status'] == 'vor' and !in_array($item['type'], self::$magazineVorTypes);
+        return $item['status'] == 'vor' and !in_array($item['type'], array_merge(self::$magazineVorTypes, self::$excludeTypes));
       }
     });
     return $content;
