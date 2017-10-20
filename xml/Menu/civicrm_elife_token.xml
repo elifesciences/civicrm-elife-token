@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<menu>
-  <item>
-    <path>civicrm/elife-tokens/settings</path>
-    <page_callback>CRM_ElifeToken_Form_Settings</page_callback>
-    <title>eLife Sciences tokens</title>
-    <access_arguments>access CiviCRM</access_arguments>
-  </item>
-</menu>
