@@ -8,9 +8,9 @@
     <author>Michael McAndrew</author>
     <email>michaelmcandrew@thirdsectordesign.org</email>
   </maintainer>
-  <releaseDate>2017-05-25</releaseDate>
-  <version>1.0</version>
-  <develStage>alpha2</develStage>
+  <releaseDate>2017-10-20</releaseDate>
+  <version>0.1.0</version>
+  <develStage>beta</develStage>
   <compatibility>
     <ver>4.7</ver>
   </compatibility>
