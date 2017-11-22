@@ -19,9 +19,8 @@ class CRM_ElifeToken_Token_MarketingMessage{
     if(!isset($this->token[$type])){
 
       $civinky = new CRM_ElifeToken_Civinky;
-
-      $css = file_get_contents(CIVICRM_UF_BASEURL."sites/all/libraries/elife-newsletter-assets/newsletter.css");
-      $html = "columns: p.promo ".json_decode(file_get_contents(CIVICRM_UF_BASEURL."newsletters/marketing-message/$type"), true)['html'];
+      $css = file_get_contents(CIVICRM_UF_BASEURL."/sites/all/libraries/elife-newsletter-assets/newsletter.css");
+      $html = "columns: p.promo ".json_decode(file_get_contents(CIVICRM_UF_BASEURL."/newsletters/marketing-message/$type"), true)['html'];
 
       $trackingToken = CRM_ElifeToken_Token_GATracking::Instance();
       $html = str_replace('{track}', $trackingToken->get(), $html);

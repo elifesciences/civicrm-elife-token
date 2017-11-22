@@ -40,7 +40,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     }
 
     $gaToken = $this->getGAToken();
-    $css = file_get_contents(CIVICRM_UF_BASEURL."sites/all/libraries/elife-newsletter-assets/newsletter.css");
+    $css = file_get_contents(CIVICRM_UF_BASEURL."/sites/all/libraries/elife-newsletter-assets/newsletter.css");
 
     $civinky = new CRM_ElifeToken_Civinky;
     $html = $civinky->query($template, [
