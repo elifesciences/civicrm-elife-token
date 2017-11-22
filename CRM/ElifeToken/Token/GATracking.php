@@ -16,7 +16,7 @@ class CRM_ElifeToken_Token_GATracking{
   }
 
   function get(){
-    if(!isset($this->$token)){
+    if(!isset($this->token)){
       $this->token = 'utm_source=content_alert&utm_medium=email&utm_content=fulltext&utm_campaign=' . date('j-F-y') . '-elife-alert';
     }
     return $this->token;
