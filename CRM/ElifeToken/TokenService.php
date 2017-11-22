@@ -39,11 +39,6 @@ class CRM_ElifeToken_TokenService{
         $value = $token->get();
         break;
       }
-      case 'marketing_message':{
-        $token = CRM_ElifeToken_Token_MarketingMessage::Instance();
-        $value = $token->get();
-        break;
-      }
       case 'poa_marketing':{
         $token = CRM_ElifeToken_Token_MarketingMessage::Instance();
         $value = $token->get('poa');
