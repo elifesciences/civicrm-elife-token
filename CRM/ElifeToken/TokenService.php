@@ -5,14 +5,15 @@
 class CRM_ElifeToken_TokenService{
 
   function getDefinitions(){
-    $definitions = ['articles.poa_last_7_days' => 'POA articles published in the last 7 days'];
-    $definitions = ['articles.poa_marketing' => 'POA marketing message'];
-    $definitions = ['articles.vor_last_7_days' => 'VOR articles published in the last 7 days'];
-    $definitions = ['articles.vor_marketing' => 'VOR marketing message'];
-    $definitions = ['articles.magazine_last_7_days' => 'Magazine articles published in the last 7 days'];
-    $definitions = ['articles.ga_tracking' => 'Google analytics tracking params for elife newsletters'];
-    $definitions = ['articles.marketing_message' => 'Marketing message for elife newsletters'];
-    $definitions = ['articles.date' => 'Date the newsletter is sent'];
+    $definitions = [
+      'articles.poa_last_7_days' => 'POA articles published in the last 7 days',
+      'articles.poa_marketing' => 'POA marketing message',
+      'articles.vor_last_7_days' => 'VOR articles published in the last 7 days',
+      'articles.vor_marketing' => 'VOR marketing message',
+      'articles.magazine_last_7_days' => 'Magazine articles published in the last 7 days',
+      'articles.ga_tracking' => 'Google analytics tracking params for elife newsletters',
+      'articles.date' => 'Date the newsletter is sent'
+    ];
     return $definitions;
   }
 
