@@ -84,7 +84,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     $endDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-1 day'), 'Y-m-d 23:23:59'));
     $query[] = 'end-date='.$endDate->format('Y-m-d');
 
-    $query[] = 'per-page=1000';
+    $query[] = 'per-page=100';
 
 
     // TODO Filter based on contact subject preferences - paused for now
