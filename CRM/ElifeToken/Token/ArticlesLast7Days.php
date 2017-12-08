@@ -154,7 +154,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
   function filterMagazine($content){
     $content['items'] = array_filter($content['items'], function($item){
-      return in_array($item['type'], self::$magazineVorTypes);
+      return array_key_exists('status', $item) and $item['status'] == 'vor' and in_array($item['type'], self::$magazineVorTypes);
     });
     return $content;
   }

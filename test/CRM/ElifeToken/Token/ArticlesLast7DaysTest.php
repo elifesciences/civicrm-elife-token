@@ -40,7 +40,7 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
     $this->checkDataStructure($content);
     foreach ($content['items'] as $item) {
       $this->assertArrayHasKey('status', $item);
-      $this->assertSame('vor', $item['status']);
+      $this->assertSame('vor', $item['status'], "Non-VOR included in magazine content: ".var_export($item, true));
       $this->assertContains($item['type'], $this->magazineTypes);
     }
   }
