@@ -76,13 +76,11 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     // Construct the URL
     $path = 'https://prod--gateway.elifesciences.org/search';
 
-    // Start date is midnight this morning - 7 days
-    $startDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-7 day'), 'Y-m-d 19:00:00'));
+    // Start date is midnight starting the day of 6 days ago
+    // which means if we execute this at 7PM we cover 6.8 days
+    $startDate = new DateTime('-6 day');
     $query[] = 'start-date='.$startDate->format('Y-m-d');
-
-    // End date is the time of sending
-    $endDate = new DateTime('now');
-    $query[] = 'end-date='.$endDate->format('Y-m-d');
+    // Don't use any end date, get everything that is available
 
     $query[] = 'per-page=100';
 
