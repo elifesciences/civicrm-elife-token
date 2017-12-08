@@ -17,6 +17,7 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
     foreach ($content['items'] as $item) {
       $this->assertArrayHasKey('status', $item);
       $this->assertSame('poa', $item['status']);
+      $this->assertNotContains($item['type'], $this->magazineTypes, "No magazine types should appear in the POA token, even if they are POA. In the future they may be modeled with a separate 'magazine poa' token");
     }
   }
 
@@ -28,7 +29,7 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
     $this->checkDataStructure($content);
     foreach ($content['items'] as $item) {
       $this->assertSame('vor', $item['status']);
-      $this->assertNotContains($item['type'], $this->magazineTypes, "No magazine types should be duplicated in VOR");
+      $this->assertNotContains($item['type'], $this->magazineTypes, "No magazine types should be duplicated in VOR, because they appear in the separate 'magazine' token used in the VOR email");
     }
   }
 
@@ -41,7 +42,7 @@ class CRM_ElifeToken_Token_ArticlesLast7DaysTest extends PHPUnit_Framework_TestC
     foreach ($content['items'] as $item) {
       $this->assertArrayHasKey('status', $item);
       $this->assertSame('vor', $item['status'], "Non-VOR included in magazine content: ".var_export($item, true));
-      $this->assertContains($item['type'], $this->magazineTypes);
+      $this->assertContains($item['type'], $this->magazineTypes, "Magazine content is selected on a few whitelist of types");
     }
   }
 

@@ -137,7 +137,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
   function filterPoa($content){
     $content['items'] = array_filter($content['items'], function($item){
       if(isset($item['status'])){
-        return $item['status'] == 'poa' and !in_array($item['type'], self::$excludeTypes);;
+        return $item['status'] == 'poa' and !in_array($item['type'], array_merge(self::$magazineVorTypes, self::$excludeTypes));
       }
     });
     return $content;
