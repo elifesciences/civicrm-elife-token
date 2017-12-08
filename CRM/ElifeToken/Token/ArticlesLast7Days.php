@@ -77,11 +77,11 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     $path = 'https://prod--gateway.elifesciences.org/search';
 
     // Start date is midnight this morning - 7 days
-    $startDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-7 day'), 'Y-m-d 00:00:00'));
+    $startDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-7 day'), 'Y-m-d 19:00:00'));
     $query[] = 'start-date='.$startDate->format('Y-m-d');
 
-    // End date last second of yesterday
-    $endDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-1 day'), 'Y-m-d 23:23:59'));
+    // End date is the time of sending
+    $endDate = new DateTime('now');
     $query[] = 'end-date='.$endDate->format('Y-m-d');
 
     $query[] = 'per-page=100';
