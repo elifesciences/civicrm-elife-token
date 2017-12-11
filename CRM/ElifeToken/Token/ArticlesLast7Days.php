@@ -76,13 +76,11 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     // Construct the URL
     $path = 'https://prod--gateway.elifesciences.org/search';
 
-    // Start date is midnight this morning - 7 days
-    $startDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-7 day'), 'Y-m-d 00:00:00'));
+    // Start date is midnight starting the day of 6 days ago
+    // which means if we execute this at 7PM we cover 6.8 days
+    $startDate = new DateTime('-6 day');
     $query[] = 'start-date='.$startDate->format('Y-m-d');
-
-    // End date last second of yesterday
-    $endDate = DateTime::createFromFormat('Y-m-d H:i:s', date_format(new DateTime('-1 day'), 'Y-m-d 23:23:59'));
-    $query[] = 'end-date='.$endDate->format('Y-m-d');
+    // Don't use any end date, get everything that is available
 
     $query[] = 'per-page=100';
 
@@ -137,7 +135,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
   function filterPoa($content){
     $content['items'] = array_filter($content['items'], function($item){
       if(isset($item['status'])){
-        return $item['status'] == 'poa' and !in_array($item['type'], self::$excludeTypes);;
+        return $item['status'] == 'poa' and !in_array($item['type'], array_merge(self::$magazineVorTypes, self::$excludeTypes));
       }
     });
     return $content;
@@ -154,7 +152,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
   function filterMagazine($content){
     $content['items'] = array_filter($content['items'], function($item){
-      return in_array($item['type'], self::$magazineVorTypes);
+      return array_key_exists('status', $item) and $item['status'] == 'vor' and in_array($item['type'], self::$magazineVorTypes);
     });
     return $content;
   }
