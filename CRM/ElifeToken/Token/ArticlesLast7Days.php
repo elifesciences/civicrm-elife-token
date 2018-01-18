@@ -32,7 +32,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     // TODO For now, return all subjects and do not filter
     // $subjects = $this->getSubjects($contactId);
     // $articles = $this->getArticles($type, $subjects);
-    $title = ($type == 'magazine') ? 'MAGAZINE' : 'LATEST';
+    $title = ($type == 'magazine') ? 'MAGAZINE' : 'LATEST RESEARCH';
     $articles = $this->getArticles($type);
 
     if(!count($articles['items'])){
