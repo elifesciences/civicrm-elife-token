@@ -1,7 +1,16 @@
 columns.content-listing
+  - var i = 0;
   h2 #{title}
   each item in articles.items
     div.item
+      if item.subjects
+        - i = 0;
+        p.subjects
+          each subject in item.subjects
+            - i++;
+            span #[a(href=`https://elifesciences.org/subjects/${subject.id}?${gaToken}`) !{subject.name}]
+            if i < item.subjects.length
+              | ,&nbsp;
       h3 #[a(href=`https://elifesciences.org/articles/${item.id}?${gaToken}`) !{item.title}]
       p.author #{item.authorLine}
       p.description !{item.impactStatement}
