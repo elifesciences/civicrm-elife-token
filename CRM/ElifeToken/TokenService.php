@@ -20,17 +20,17 @@ class CRM_ElifeToken_TokenService{
   function getValue($token, $cid, $job){
     switch($token) {
       case 'poa_last_7_days':{
-        $token = new CRM_ElifeToken_Token_ArticlesLast7Days;
+        $token = CRM_ElifeToken_Token_ArticlesLast7Days::Instance();
         $value = $token->get($cid, $job, 'poa');
         break;
       }
       case 'vor_last_7_days':{
-        $token = new CRM_ElifeToken_Token_ArticlesLast7Days;
+        $token = CRM_ElifeToken_Token_ArticlesLast7Days::Instance();
         $value = $token->get($cid, $job, 'vor');
         break;
       }
       case 'magazine_last_7_days':{
-        $token = new CRM_ElifeToken_Token_ArticlesLast7Days;
+        $token = CRM_ElifeToken_Token_ArticlesLast7Days::Instance();
         $value = $token->get($cid, $job, 'magazine');
         break;
       }

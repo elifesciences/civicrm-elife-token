@@ -19,6 +19,18 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
   static $magazineVorTypes = ['editorial', 'feature', 'insight'];
 
   static $excludeTypes = ['correction'];
+
+  public static function Instance(){
+      static $inst = null;
+      if ($inst === null) {
+          $inst = new CRM_ElifeToken_Token_ArticlesLast7Days;
+      }
+      return $inst;
+  }
+
+  private function __construct(){
+  }
+
   /**
    * Gets the html for each recipient
    * @method get
@@ -42,7 +54,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
     $gaToken = $this->getGAToken();
     $css = file_get_contents(CIVICRM_UF_BASEURL."/sites/all/libraries/elife-newsletter-assets/newsletter.css");
 
-    $civinky = new CRM_ElifeToken_Civinky;
+    $civinky = CRM_ElifeToken_Civinky::Instance();
     $html = $civinky->query($template, [
       'title' => $title,
       'articles' => $articles,
