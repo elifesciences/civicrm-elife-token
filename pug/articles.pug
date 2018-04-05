@@ -12,5 +12,5 @@ columns.content-listing
             if i < item.subjects.length
               | ,&nbsp;
       h3 #[a(href=`https://elifesciences.org/articles/${item.id}?${gaToken}`) !{item.title}]
-      p.author #{item.authorLine}
+      p.author #{item.authorLineAlternate}
       p.description !{item.impactStatement}

@@ -83,10 +83,6 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
   }
 
   function getArticles($type, $subjects = null){
-    // var_dump($type);
-
-    // Construct the URL
-    $path = 'https://prod--gateway.elifesciences.org/search';
 
     // Start date is midnight starting the day of 6 days ago
     // which means if we execute this at 7PM we cover 6.8 days
@@ -96,24 +92,26 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
 
     $query[] = 'per-page=100';
 
-
-    // TODO Filter based on contact subject preferences - paused for now
-    // foreach($subjects as $subject){
-    //   $query[] = '&subject[]=' . $subject;
-    // }
-
-    $url = $path.'?'.implode('&', $query);
-
-    // Check if we have retrieved this already
-    if(!isset(self::$elifeApiCache[$url])){
-      self::$elifeApiCache[$url] = json_decode(file_get_contents($url), true);
-    }
-
-    $result = self::$elifeApiCache[$url];
-
+    $url = 'search?'.implode('&', $query);
+    $elifeApi = CRM_ElifeToken_ElifeApi::Instance();
+    $result = $elifeApi->query($url);
     $filtered = call_user_func([$this, 'filter'.ucfirst($type)], $result);
 
-    return $filtered;
+    foreach($filtered['items'] as &$item) {
+      $article = $elifeApi->query("articles/{$item['id']}");
+      if(count($article['authors']) < 4){
+        $authors = [];
+        foreach($article['authors'] as $author){
+          $authors[] = $author['name']['preferred'];
+        }
+        $item['authorLineAlternate'] = implode(", ", $authors);
+      } else {
+        $item['authorLineAlternate'] =
+          $article['authors'][0]['name']['preferred'] . ', ' .
+          $article['authors'][1]['name']['preferred'] . ' ... ' .
+          end($article['authors'])['name']['preferred'];
+      }
+    }
   }
 
   function getGAToken(){
