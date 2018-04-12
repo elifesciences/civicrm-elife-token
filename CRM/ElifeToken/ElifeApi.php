@@ -18,18 +18,14 @@ class CRM_ElifeToken_ElifeApi{
   }
 
   private function __construct(){
-    echo "created new instance\n";
   }
 
 
   function query($path){
-    var_dump();
     if(!isset(self::$cache[$path])){
-      echo "{$path} missed cache\n";
       $fullPath = self::BASE_URL.$path;
       self::$cache[$path] = json_decode(file_get_contents($fullPath), true);
     }else{
-      echo "{$path} hit cache\n";
     }
     return self::$cache[$path];
   }

@@ -112,6 +112,7 @@ class CRM_ElifeToken_Token_ArticlesLast7Days{
           end($article['authors'])['name']['preferred'];
       }
     }
+    return $filtered;
   }
 
   function getGAToken(){
